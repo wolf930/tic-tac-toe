@@ -8,23 +8,23 @@
     </div>
     <div class="row">
       <div class="col-md-8 offset-md-2 col-sm-12 form-group">
-        <label for="player1-name" class="control-label">
-          Player1(<span class="symbol">x</span>) Name:
+        <label for="player-x-name" class="control-label">
+          Player<span class="symbol">x</span> Name:
         </label>
         <input
           class="form-control"
-          id="player1-name"
-          v-model="player1"
+          id="player-x-name"
+          v-model="playerX"
           placeholder="Please input name">
       </div>
       <div class="col-md-8 offset-md-2 col-sm-12 form-group">
-        <label for="player2-name" class="control-label">
-          Player2(<span class="symbol">o</span>) Name:
+        <label for="player-o-name" class="control-label">
+          Player<span class="symbol">o</span> Name:
         </label>
         <input
           class="form-control"
-          id="player2-name"
-          v-model="player2"
+          id="player-o-name"
+          v-model="playerO"
           placeholder="Please input name">
       </div>
       <div class="col-md-8 offset-md-2 mt-5">
@@ -35,31 +35,37 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapMutations } from 'vuex';
 
 export default {
   name: 'enter-player-names',
   data() {
     return {
       msg: 'Enter Player Names',
-      player1: '',
-      player2: '',
+      playerX: '',
+      playerO: '',
     };
   },
   methods: {
-    ...mapActions('players', ['setPlayers']),
+    ...mapMutations('player', ['setPlayers']),
     onStart() {
-      const { player1, player2 } = this;
-      if (player1 === '' || player2 === '') {
-        this.$bvToast.toast('Please input player name to start!', {
+      const { playerX, playerO } = this;
+      if (playerX === '' || playerO === '') {
+        this.$bvToast.toast("Please input players' name to start!", {
           variant: 'danger',
           autoHideDelay: 500,
           noCloseButton: true,
         });
-        return;
+      } else if (playerX === playerO) {
+        this.$bvToast.toast("Tow Players' name are same, Please input correctly!", {
+          variant: 'danger',
+          autoHideDelay: 500,
+          noCloseButton: true,
+        });
+      } else {
+        this.setPlayers({ playerX, playerO });
+        this.$router.push({ name: 'game' });
       }
-      this.setPlayers({ player1, player2 });
-      this.$router.push({ name: 'game' });
     },
   },
 };
@@ -90,5 +96,4 @@ export default {
   margin-top: 30px;
   width: 260px;
 }
-
 </style>

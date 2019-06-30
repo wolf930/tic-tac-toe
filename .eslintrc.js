@@ -37,7 +37,8 @@ module.exports = {
       ignorePropertyModificationsFor: [
         'state', // for vuex state
         'acc', // for reduce accumulators
-        'e' // for e.returnvalue
+        'e', // for e.returnvalue
+        'el' // for Velocity's Param
       ]
     }],
     'no-plusplus': ['error', { 
