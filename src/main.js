@@ -8,6 +8,7 @@ import 'vue-awesome/icons/flag';
 import 'vue-awesome/icons';
 import Icon from 'vue-awesome/components/Icon';
 import App from './App';
+import store from './store';
 import router from './router';
 
 Vue.use(BootstrapVue);
@@ -17,6 +18,7 @@ Vue.config.productionTip = false;
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   router,
   components: { App },
   template: '<App/>',
